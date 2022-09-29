@@ -7,7 +7,7 @@ import logging
 import time
 
 from pganonymize.constants import DATABASE_ARGS, DEFAULT_SCHEMA_FILE
-from pganonymize.providers import provider_registry
+from pganonymize.providers import provider_registry, fake_data
 from pganonymize.utils import anonymize_tables, create_database_dump, get_connection, load_config, truncate_tables
 
 
@@ -46,6 +46,7 @@ def get_arg_parser():
                         default=False)
     parser.add_argument('--dump-file', help='Create a database dump file with the given name')
     parser.add_argument('--init-sql', help='SQL to run before starting anonymization', default=False)
+    parser.add_argument('--seed', help='Faker seed', default=None)
 
     return parser
 
@@ -61,6 +62,9 @@ def main(args):
     if args.list_providers:
         list_provider_classes()
         return 0
+
+    if args.seed:
+        fake_data.seed(args.seed)
 
     schema = load_config(args.schema)
 

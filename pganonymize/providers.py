@@ -11,7 +11,6 @@ from pganonymize.exceptions import InvalidProvider, InvalidProviderArgument, Pro
 
 fake_data = Faker()
 
-
 class ProviderRegistry(object):
     """A registry for provider classes."""
 
